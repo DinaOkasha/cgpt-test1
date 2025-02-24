@@ -1,0 +1,19 @@
+on: [pull_request]
+
+jobs:
+  code-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install OpenAI Dependencies
+        run: pip install --upgrade openai httpx
+
+      - name: Run GPT Code Review
+        uses: sshnaidm/gpt-code-review-action@v2.0
+        with:
+          openai-key: ${{ secrets.OPENAI_API_KEY }}
